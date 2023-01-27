@@ -17,8 +17,8 @@
 
         <div class="front">
             <div class="image">
-                <img src="chip.png" alt="">
-                <img src="visa.png" alt="">
+                <img src="Resources/chip.png" alt="">
+                <img src="Resources/visa.png" alt="">
             </div>
             <div class="card-number-box">################</div>
             <div class="flexbox">
@@ -34,6 +34,10 @@
                     </div>
                 </div>
             </div>
+            <svg id="ccicon" class="ccicon" width="50" height="50" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink">
+
+        </svg>
         </div>
 
         <div class="back">
@@ -41,7 +45,7 @@
             <div class="box">
                 <span>cvv</span>
                 <div class="cvv-box"></div>
-                <img src="image/visa.png" alt="">
+                <img src="Resources/visa.png" alt="">
             </div>
         </div>
 
@@ -50,18 +54,18 @@
     <form action="">
         <div class="inputBox">
             <span>Número do Cartão</span>
-            <input type="text" maxlength="16" class="numero-cartao-input">
+            <input type="text" maxlength="19" id="numero-cartao" class="numero-cartao-input" inputmode="numeric" onkeyup="this.value = detectar_cartao(event)" >
         </div>
 
         <div class="inputBox">
             <span>Nome do Titular</span>
-            <input type="text" class="nome-titular-input">
+            <input type="text" id="nome-titular" class="nome-titular-input" inputmode="full-width-latin">
         </div>
 
         <div class="flexbox">
             <div class="inputBox">
                 <span>mês de expiração</span>
-                <select name="" id="" class="mes-exp-input">
+                <select name="" id="mes-expir" class="mes-exp-input">
                     <option value="month" selected disabled>mês</option>
                     <option value="01">01</option>
                     <option value="02">02</option>
@@ -80,7 +84,7 @@
 
             <div class="inputBox">
                 <span>ano de expiração</span>
-                <select name="" id="" class="ano-exp-input">
+                <select name="" id="ano-expir" class="ano-exp-input">
                     <option value="year" selected disabled>ano</option>
                     <option value="2021">2021</option>
                     <option value="2022">2022</option>
@@ -96,23 +100,22 @@
             </div>
             <div class="inputBox">
                 <span>cvv</span>
-                <input type="text" maxlength="4" class="cvv-input">
+                <input type="text" maxlength="4" id="cvv-seguranca" class="cvv-input" inputmode="numeric" pattern="[0-9]*" >
             </div>
 
             <div class="flexbox">
                 <div class="inputBox">
                     <span>parcelamento</span>
-                    <select name="" id="" class="parcelamento-input">
-                        <option value="parcelamento" selected disabled>1x</option>
-                        <option value="01x">01x</option>
-                        <option value="02x">02x</option>
-                        <option value="03x">03x</option>
-                        <option value="04x">04x</option>
-                        <option value="05x">05x</option>
-                        <option value="06x">06x</option>
-                        <option value="07x">07x</option>
-                        <option value="08x">08x</option>
-                        <option value="09x">09x</option>
+                    <select name="" id="parcela" class="parcelamento-input">       
+                        <option value="1x">1x</option>
+                        <option value="2x">2x</option>
+                        <option value="3x">3x</option>
+                        <option value="4x">4x</option>
+                        <option value="5x">5x</option>
+                        <option value="6x">6x</option>
+                        <option value="7x">7x</option>
+                        <option value="8x">8x</option>
+                        <option value="9x">9x</option>
                         <option value="10x">10x</option>
                         <option value="11x">11x</option>
                         <option value="12x">12x</option>
@@ -120,32 +123,35 @@
                 </div>
         </div>
        
-        <input type="submit" value="submit" class="submit-btn">
+     
+        <input type="button" value="finalizar-pagamento" class="submit-btn" onclick="this.value = finalizar_pagamento()">
+    
     </form>
 
 </div>    
     
 
 
-
-
-
 <script>
 
 document.querySelector('.numero-cartao-input').oninput = () =>{
-    document.querySelector('.card-number-box').innerText = document.querySelector('.card-number-input').value;
+    document.querySelector('.card-number-box').innerText = document.querySelector('.numero-cartao-input').value;   
 }
 
+
 document.querySelector('.nome-titular-input').oninput = () =>{
-    document.querySelector('.card-holder-name').innerText = document.querySelector('.card-holder-input').value;
+    document.querySelector('.card-holder-name').innerText = document.querySelector('.nome-titular-input').value;
+  
 }
 
 document.querySelector('.mes-exp-input').oninput = () =>{
-    document.querySelector('.exp-month').innerText = document.querySelector('.month-input').value;
+    document.querySelector('.exp-month').innerText = document.querySelector('.mes-exp-input').value;
+   
 }
 
 document.querySelector('.ano-exp-input').oninput = () =>{
-    document.querySelector('.exp-year').innerText = document.querySelector('.year-input').value;
+    document.querySelector('.exp-year').innerText = document.querySelector('.ano-exp-input').value;
+  
 }
 
 document.querySelector('.cvv-input').onmouseenter = () =>{
@@ -160,13 +166,95 @@ document.querySelector('.cvv-input').onmouseleave = () =>{
 
 document.querySelector('.cvv-input').oninput = () =>{
     document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
+  
 }
 
+function detectar_cartao(digito) 
+{
+    digito = document.getElementById("numero-cartao").value
+   
+    //JCB
+    jcb_regex = new RegExp('^(?:2131|1800|35)[0-9]{0,}$'); //2131, 1800, 35 (3528-3589)
+    // American Express
+    amex_regex = new RegExp('^3[47][0-9]{0,}$'); //34, 37
+    // Diners Club
+    diners_regex = new RegExp('^3(?:0[0-59]{1}|[689])[0-9]{0,}$'); //300-305, 309, 36, 38-39
+    // Visa
+    visa_regex = new RegExp('^4[0-9]{0,}$'); //4
+    // MasterCard
+    mastercard_regex = new RegExp('^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[01]|2720)[0-9]{0,}$'); //2221-2720, 51-55
+    maestro_regex = new RegExp('^(5[06789]|6)[0-9]{0,}$'); 
+    //Discover
+    discover_regex = new RegExp('^(6011|65|64[4-9]|62212[6-9]|6221[3-9]|622[2-8]|6229[01]|62292[0-5])[0-9]{0,}$');
+    ////6011, 622126-622925, 644-649, 65
+   
+    valor = digito.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+    var matches = valor.match(/\d{4,16}/g);
+    var match = matches && matches[0] || ''
+    var parts = []
+    for (i=0, len=match.length; i<len; i+=4) {
+    parts.push(match.substring(i, i+4))
+    }
+    if (parts.length) {
+
+     var bandeira = "unknown";
+    if (digito.match(jcb_regex)) {
+        bandeira = "jcb";
+    } else if (digito.match(amex_regex)) {
+        bandeira = "amex";
+    } else if (digito.match(diners_regex)) {
+        bandeira = "diners_club";
+    } else if (digito.match(visa_regex)) {
+        bandeira = "visa";
+    } else if (digito.match(mastercard_regex)) {
+        bandeira = "mastercard";
+        console.log("chegou")
+    } else if (digito.match(discover_regex)) {
+        bandeira = "discover";
+    } else if (digito.match(maestro_regex)) {
+        if (digito[0] == '5') { 
+            bandeira = "mastercard";
+        } else {
+            bandeira = "maestro"; 
+        }
+    }
+       
+    return parts.join(' ')
+    } else {  
+    return valor
+   
+    }
+
+    
+
+    onload = function() {
+  document.getElementById('numero-cartao-input').oninput = function() {
+    this.value = detectar_cartao(this.value)
+  }
+}
+
+}
+
+var bandeiraFinal = new bandeiraFinal;
+
+function finalizar_pagamento()
+{
+    var numeroCartao = document.getElementById('numero-cartao').value;
+    var nomeTitular = document.getElementById('nome-titular').value;
+    var mesExpiracao = document.getElementById('mes-expir').value;
+    var anoExpiracao = document.getElementById('ano-expir').value;
+    var numeroCvv = document.getElementById('cvv-seguranca').value;
+    var parcelas = document.getElementById('parcela').value;
+    var bandeira = document
+
+console.log('\n Número do cartão:' + numeroCartao + "\n Nome do Titular: " + nomeTitular + "\n Mês de expiração: " + mesExpiracao + "\n Ano de Expiração: " + anoExpiracao
++ "\n Número de Segurança: " + numeroCvv + "\n Parcelas: " + parcelas)
+
+}
+
+
+
 </script>
-
-
-
-
 
 
 

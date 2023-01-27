@@ -25,13 +25,15 @@
     border-radius: 5px;
     box-shadow: 0 10px 15px rgba(0,0,0,.1);
     padding: 20px;
-    width: 600px;
+    width: 700px;
     padding-top: 160px;
-    height: 550px;
+    height: 600px;
+  
 }
 
 .container form .inputBox{
     margin-top: 20px;
+    width: 100%;
 }
 
 .container form .inputBox span{
@@ -60,16 +62,17 @@
 
 .container form .submit-btn{
     width: 100%;
+    max-width: 660px;
     background:linear-gradient(45deg,(blueviolet), deeppink);
-    margin-top: 20px;
+    margin-top: 150px;
     padding: 15px;
     font-size: 20px;
     color:#fff;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     transition: .2s linear;
-    position:relative;
-     
+    position:absolute;
+    
 }
 
 .container form .submit-btn:hover{
@@ -134,7 +137,7 @@
     top:0; left: 0;
     height: 100%;
     width: 100%;
-    background:linear-gradient(45deg, blueviolet, deeppink);
+    background:linear-gradient(135deg, blue, aqua);
     border-radius: 5px;
     padding: 20px 0;
     text-align: right;
