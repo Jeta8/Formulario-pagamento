@@ -16,11 +16,11 @@
     <div class="card-container">
 
         <div class="front">
-            <div class="image">
+            <div class="iconCard-image" >
                 <img src="Resources/chip.png" alt="">
-                <img src="Resources/visa.png" alt="">
+                <img src="" alt="" id="icone-bandeira" class="icone-bandeira-frente">
             </div>
-            <div class="card-number-box">################</div>
+            <div class="card-number-box">1234 1234 1234 1234</div>
             <div class="flexbox">
                 <div class="box">
                     <span>Nome do Titular</span>
@@ -34,19 +34,17 @@
                     </div>
                 </div>
             </div>
-            <svg id="ccicon" class="ccicon" width="50" height="50" viewBox="0 0 750 471" version="1.1" xmlns="http://www.w3.org/2000/svg"
-            xmlns:xlink="http://www.w3.org/1999/xlink">
+     
 
-        </svg>
         </div>
 
         <div class="back">
             <div class="stripe"></div>
             <div class="box">
                 <span>cvv</span>
-                <div class="cvv-box"></div>
-                <img src="Resources/visa.png" alt="">
+                <div class="cvv-box"></div>                    
             </div>
+            <img src="" id="icone-bandeira-fundo"  class="icone-bandeira-fundo">
         </div>
 
     </div>
@@ -54,7 +52,7 @@
     <form action="">
         <div class="inputBox">
             <span>Número do Cartão</span>
-            <input type="text" maxlength="19" id="numero-cartao" class="numero-cartao-input" inputmode="numeric" onkeyup="this.value = detectar_cartao(event)" >
+            <input type="text" maxlength="19" id="numero-cartao" class="numero-cartao-input" inputmode="numeric" onkeyup="this.value = detectar_cartao(event)"  >
         </div>
 
         <div class="inputBox">
@@ -124,7 +122,7 @@
         </div>
        
      
-        <input type="button" value="finalizar-pagamento" class="submit-btn" onclick="this.value = finalizar_pagamento()">
+        <input type="button" value="finalizar pagamento" class="submit-btn" onclick="this.value = finalizar_pagamento()">
     
     </form>
 
@@ -133,60 +131,57 @@
 
 
 <script>
-
+// O que o usuário escrever nos inputs, vai ser passado para a 'imagem' do cartão
 document.querySelector('.numero-cartao-input').oninput = () =>{
     document.querySelector('.card-number-box').innerText = document.querySelector('.numero-cartao-input').value;   
 }
 
-
 document.querySelector('.nome-titular-input').oninput = () =>{
     document.querySelector('.card-holder-name').innerText = document.querySelector('.nome-titular-input').value;
-  
 }
 
 document.querySelector('.mes-exp-input').oninput = () =>{
     document.querySelector('.exp-month').innerText = document.querySelector('.mes-exp-input').value;
-   
 }
 
 document.querySelector('.ano-exp-input').oninput = () =>{
     document.querySelector('.exp-year').innerText = document.querySelector('.ano-exp-input').value;
-  
 }
 
-document.querySelector('.cvv-input').onmouseenter = () =>{
+document.querySelector('.cvv-input').onfocus = () =>{
     document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(-180deg)';
     document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
 }
 
-document.querySelector('.cvv-input').onmouseleave = () =>{
+document.querySelector('.cvv-input').onblur = () =>{
     document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(0deg)';
     document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(180deg)';
 }
 
 document.querySelector('.cvv-input').oninput = () =>{
     document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
-  
 }
+
 
 function detectar_cartao(digito) 
 {
     digito = document.getElementById("numero-cartao").value
    
-    //JCB
-    jcb_regex = new RegExp('^(?:2131|1800|35)[0-9]{0,}$'); //2131, 1800, 35 (3528-3589)
+    // JCB
+    jcb_regex = new RegExp('^(?:2131|1800|35)[0-9]{0,}$'); 
     // American Express
-    amex_regex = new RegExp('^3[47][0-9]{0,}$'); //34, 37
+    amex_regex = new RegExp('^3[47][0-9]{0,}$'); 
     // Diners Club
-    diners_regex = new RegExp('^3(?:0[0-59]{1}|[689])[0-9]{0,}$'); //300-305, 309, 36, 38-39
+    diners_regex = new RegExp('^3(?:0[0-59]{1}|[689])[0-9]{0,}$');
     // Visa
-    visa_regex = new RegExp('^4[0-9]{0,}$'); //4
+    visa_regex = new RegExp('^4[0-9]{0,}$');
     // MasterCard
-    mastercard_regex = new RegExp('^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[01]|2720)[0-9]{0,}$'); //2221-2720, 51-55
+    mastercard_regex = new RegExp('^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[01]|2720)[0-9]{0,}$'); 
+    // Maestro
     maestro_regex = new RegExp('^(5[06789]|6)[0-9]{0,}$'); 
-    //Discover
+    // Discover
     discover_regex = new RegExp('^(6011|65|64[4-9]|62212[6-9]|6221[3-9]|622[2-8]|6229[01]|62292[0-5])[0-9]{0,}$');
-    ////6011, 622126-622925, 644-649, 65
+    
    
     valor = digito.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
     var matches = valor.match(/\d{4,16}/g);
@@ -197,57 +192,93 @@ function detectar_cartao(digito)
     }
     if (parts.length) {
 
-     var bandeira = "unknown";
+     var bandeira = "";
+     const imagemBandeira = document.getElementById("icone-bandeira");
+     const imagemBandeiraFundo = document.getElementById("icone-bandeira-fundo");
+     
+
     if (digito.match(jcb_regex)) {
         bandeira = "jcb";
-    } else if (digito.match(amex_regex)) {
+        bandeiraFinal = bandeira.toUpperCase();
+        imagemBandeira.src = "Resources/jcb-icon.png";
+        imagemBandeiraFundo.src = "Resources/jcb-icon.png";
+    } 
+    else if (digito.match(amex_regex)) {
         bandeira = "amex";
-    } else if (digito.match(diners_regex)) {
+        bandeiraFinal = bandeira.toUpperCase();
+        imagemBandeira.src = "Resources/amex-icon.png";
+        imagemBandeiraFundo.src = "Resources/amex-icon.png";
+    } 
+    else if (digito.match(diners_regex)) {
         bandeira = "diners_club";
-    } else if (digito.match(visa_regex)) {
+        bandeiraFinal = bandeira.toUpperCase();
+        imagemBandeira.src = "Resources/diners-icon.png";
+        imagemBandeiraFundo.src = "Resources/diners-icon.png";
+    } 
+    else if (digito.match(visa_regex)) {
         bandeira = "visa";
-    } else if (digito.match(mastercard_regex)) {
+        bandeiraFinal = bandeira.toUpperCase();
+        imagemBandeira.src = "Resources/visa-icon.png"
+        imagemBandeiraFundo.src = "Resources/visa-icon.png"
+    } 
+    else if (digito.match(mastercard_regex)) {
         bandeira = "mastercard";
-        console.log("chegou")
-    } else if (digito.match(discover_regex)) {
+        bandeiraFinal = bandeira.toUpperCase();
+        imagemBandeira.src = "Resources/mastercard-icon.png";
+        imagemBandeiraFundo.src = "Resources/mastercard-icon.png";
+    } 
+    else if (digito.match(discover_regex)) {
         bandeira = "discover";
-    } else if (digito.match(maestro_regex)) {
+        bandeiraFinal = bandeira.toUpperCase();
+        imagemBandeira.src = "Resources/discover-icon.png";
+        imagemBandeiraFundo.src = "Resources/discover-icon.png";
+    } 
+    else if (digito.match(maestro_regex)) {
         if (digito[0] == '5') { 
             bandeira = "mastercard";
-        } else {
-            bandeira = "maestro"; 
+            bandeiraFinal = bandeira.toUpperCase();
+            imagemBandeira.src = "Resources/mastercard-icon.png";
+            imagemBandeiraFundo.src = "Resources/mastercard-icon.png";
         }
+         else {
+            bandeira = "maestro"; 
+            bandeiraFinal = bandeira.toUpperCase();
+            imagemBandeira.src = "Resources/maestro-icon.png";
+            imagemBandeiraFundo.src = "Resources/maestro-icon.png";
+        }      
     }
-       
+   
     return parts.join(' ')
     } else {  
     return valor
    
     }
 
-    
-
     onload = function() {
   document.getElementById('numero-cartao-input').oninput = function() {
     this.value = detectar_cartao(this.value)
-  }
+   
+    
+  } 
+}
 }
 
-}
 
-var bandeiraFinal = new bandeiraFinal;
+let bandeiraFinal;
+
 
 function finalizar_pagamento()
 {
-    var numeroCartao = document.getElementById('numero-cartao').value;
+    var numeroCard = document.getElementById('numero-cartao').value;
+    var numeroCartao = numeroCard.replace(/ /g,'',);
     var nomeTitular = document.getElementById('nome-titular').value;
     var mesExpiracao = document.getElementById('mes-expir').value;
     var anoExpiracao = document.getElementById('ano-expir').value;
     var numeroCvv = document.getElementById('cvv-seguranca').value;
     var parcelas = document.getElementById('parcela').value;
-    var bandeira = document
+    var bandeira = bandeiraFinal;
 
-console.log('\n Número do cartão:' + numeroCartao + "\n Nome do Titular: " + nomeTitular + "\n Mês de expiração: " + mesExpiracao + "\n Ano de Expiração: " + anoExpiracao
+console.log('\n Número do cartão:' + numeroCartao + "\n Bandeira:"  + bandeira + "\n Nome do Titular: " + nomeTitular + "\n Mês de expiração: " + mesExpiracao + "\n Ano de Expiração: " + anoExpiracao
 + "\n Número de Segurança: " + numeroCvv + "\n Parcelas: " + parcelas)
 
 }
