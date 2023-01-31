@@ -19,6 +19,7 @@
   justify-content: center;
   flex-flow: column;
   padding-bottom: 60px;
+  flex:1;
 }
 
 .container form {
@@ -58,6 +59,7 @@
 
 .container form .flexbox .inputBox {
   flex: 1 1 150px;
+  
 }
 
 .container form .submit-btn {
@@ -178,4 +180,22 @@
   margin-top: 10px;
   height: 50px;
   margin-right: 20px;
+}
+
+.invalid-tooltip{
+  visibility: hidden;
+  position: relative;
+  display: inline-block;
+  
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input:invalid {
+  outline: none;
+  border: 2px solid red;
 }
