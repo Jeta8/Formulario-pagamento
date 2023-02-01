@@ -54,15 +54,16 @@
         <form action="">
             <div class="inputBox">
                 <span>Número do Cartão</span>
-                <input type="text" maxlength="19" id="numero-cartao" title="Número do cartão" class="numero-cartao-input" inputmode="numeric"
+                <input type="text" maxlength="19" minlength="16" id="numero-cartao" title="Número do cartão" class="numero-cartao-input" inputmode="numeric"
                     onkeyup="this.value = detectar_cartao(event)" required>
-                    <div class="invalid-tooltip">Insira um cartão válido.</div>
+                    <span class="invalid">Insira um cartao valido</span>
+               
             </div>
 
             <div class="inputBox">
                 <span>Nome do Titular</span>
-                <input type="text" id="nome-titular" class="nome-titular-input" inputmode="full-width-latin" required>
-                <div class="invalid-tooltip">Insira um nome válido.</div>
+                <input type="text" id="nome-titular" minlength="7" title="Nome do Titular" class="nome-titular-input" inputmode="full-width-latin" required>
+                <span class="invalid">Insira um nome valido</span>
             </div>
 
             <div class="flexbox">
@@ -83,7 +84,7 @@
                         <option value="11">11</option>
                         <option value="12">12</option>
                     </select>
-                    <div class="invalid-tooltip">Selecione o mês de expiração.</div>
+                    
                 </div>
 
                 <div class="inputBox">
@@ -101,13 +102,13 @@
                         <option value="31">2031</option>
                         <option value="32">2032</option>
                     </select>
-                    <div class="invalid-tooltip">Selecione o ano de expiração.</div>
+                    
                 </div>
                 <div class="inputBox">
                     <span>cvv</span>
-                    <input type="text" maxlength="3" id="cvv-seguranca" class="cvv-input" inputmode="numeric"
+                    <input type="text" maxlength="3"  minlength="3" id="cvv-seguranca" class="cvv-input" inputmode="numeric"
                         pattern="[0-9]*" required>
-                        <div class="invalid-tooltip">Insira um número de segurança válido.</div>     
+                        
                 </div>
 
                 <div class="flexbox">
@@ -131,7 +132,7 @@
                 </div>
 
 
-                <input type="submit" value="finalizar pagamento" class="submit-btn"
+                <input type="submit" value="finalizar pagamento"  class="submit-btn"
                     onclick="this.value = finalizar_pagamento()">
 
         </form>
@@ -329,6 +330,25 @@
 
         }
 
+        let form = document.querySelector("form");
+        let inputs = form.querySelectorAll("input");
+        let submitButton = form.querySelector("button[type='submit']");
+        let SubmiBtnTexto = submitButton.textContent;
+
+        submitButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        let isFormValid = true;
+        for (let i = 0; i < inputs.length; i++) {
+        if (inputs[i].value === "" || inputs[i].length < 3) {
+          inputs[i].classList.add("invalid");
+          isFormValid = false;      
+        }
+        if (!isFormValid == true) {
+            submitButton.textContent = SubmiBtnTexto;
+            return;
+  }
+  }
+});
 
 
 
