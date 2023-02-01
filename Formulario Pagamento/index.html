@@ -12,9 +12,7 @@
 </head>
 
 <body>
-
     <div class="container">
-
         <div class="card-container">
 
             <div class="front">
@@ -55,14 +53,14 @@
             <div class="inputBox">
                 <span>Número do Cartão</span>
                 <input type="text" maxlength="19" minlength="16" id="numero-cartao" title="Número do cartão" class="numero-cartao-input" inputmode="numeric"
-                    onkeyup="this.value = detectar_cartao(event)" required>
-                    <span class="invalid">Insira um cartao valido</span>
+                    onkeyup="this.value = detectar_cartao(event)"  required>
+                    <span class="invalid">Insira um cartão válido</span>
                
             </div>
 
             <div class="inputBox">
                 <span>Nome do Titular</span>
-                <input type="text" id="nome-titular" minlength="7" title="Nome do Titular" class="nome-titular-input" inputmode="full-width-latin" required>
+                <input type="text" id="nome-titular" minlength="7"  title="Nome do Titular" class="nome-titular-input" inputmode="full-width-latin" required>
                 <span class="invalid">Insira um nome valido</span>
             </div>
 
@@ -108,7 +106,7 @@
                     <span>cvv</span>
                     <input type="text" maxlength="3"  minlength="3" id="cvv-seguranca" class="cvv-input" inputmode="numeric"
                         pattern="[0-9]*" required>
-                        
+                        <span class="invalid">Insira um código valido</span>
                 </div>
 
                 <div class="flexbox">
@@ -132,231 +130,12 @@
                 </div>
 
 
-                <input type="submit" value="finalizar pagamento"  class="submit-btn"
-                    onclick="this.value = finalizar_pagamento()">
+                <input type="submit" id="btn-enviar" class="submit-btn"
+                    onclick="finalizar_pagamento()">
 
         </form>
-
     </div>
-
-
-
-    <script>
-        // O que o usuário escrever nos inputs, vai ser passado para a 'imagem' do cartão
-        document.querySelector('.numero-cartao-input').oninput = () => {
-            document.querySelector('.card-number-box').innerText = document.querySelector('.numero-cartao-input').value;
-        }
-
-        document.querySelector('.nome-titular-input').oninput = () => {
-            document.querySelector('.card-holder-name').innerText = document.querySelector('.nome-titular-input').value;
-        }
-
-        document.querySelector('.mes-exp-input').oninput = () => {
-            document.querySelector('.exp-month').innerText = document.querySelector('.mes-exp-input').value;
-        }
-
-        document.querySelector('.ano-exp-input').oninput = () => {
-            document.querySelector('.exp-year').innerText = document.querySelector('.ano-exp-input').value;
-        }
-
-        document.querySelector('.cvv-input').onfocus = () => {
-            document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(-180deg)';
-            document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(0deg)';
-        }
-
-        document.querySelector('.cvv-input').onblur = () => {
-            document.querySelector('.front').style.transform = 'perspective(1000px) rotateY(0deg)';
-            document.querySelector('.back').style.transform = 'perspective(1000px) rotateY(180deg)';
-        }
-
-        document.querySelector('.cvv-input').oninput = () => {
-            document.querySelector('.cvv-box').innerText = document.querySelector('.cvv-input').value;
-        }
-
-
-        function detectar_cartao(digito) {
-            digito = document.getElementById("numero-cartao").value
-
-            // JCB
-            jcb_regex = new RegExp('^(?:2131|1800|35)[0-9]{0,}$');
-            // American Express
-            amex_regex = new RegExp('^3[47][0-9]{0,}$');
-            // Diners Club
-            diners_regex = new RegExp('^3(?:0[0-59]{1}|[689])[0-9]{0,}$');
-            // Visa
-            visa_regex = new RegExp('^4[0-9]{0,}$');
-            // MasterCard
-            mastercard_regex = new RegExp('^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[01]|2720)[0-9]{0,}$');
-            // Maestro
-            maestro_regex = new RegExp('^(5[06789]|6)[0-9]{0,}$');
-            // Discover
-            discover_regex = new RegExp('^(6011|65|64[4-9]|62212[6-9]|6221[3-9]|622[2-8]|6229[01]|62292[0-5])[0-9]{0,}$');
-
-
-            valor = digito.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-            var matches = valor.match(/\d{4,16}/g);
-            var match = matches && matches[0] || ''
-            var parts = []
-            for (i = 0, len = match.length; i < len; i += 4) {
-                parts.push(match.substring(i, i + 4))
-            }
-            if (parts.length) {
-
-                var bandeira = "";
-                const imagemBandeira = document.getElementById("icone-bandeira");
-                const imagemBandeiraFundo = document.getElementById("icone-bandeira-fundo");
-                const LengthCvv = document.getElementById("cvv-seguranca");
-
-                if (digito.match(jcb_regex)) {
-                    bandeira = "jcb";
-                    bandeiraFinal = bandeira.toUpperCase();
-                    imagemBandeira.src = "Resources/jcb-icon.png";
-                    imagemBandeiraFundo.src = "Resources/jcb-icon.png";
-                    LengthCvv.setAttribute('maxlength',3);
-                }
-                else if (digito.match(amex_regex)) {
-                    bandeira = "amex";
-                    bandeiraFinal = bandeira.toUpperCase();
-                    imagemBandeira.src = "Resources/amex-icon.png";
-                    imagemBandeiraFundo.src = "Resources/amex-icon.png";
-                    LengthCvv.setAttribute('maxlength',4);
-                }
-                else if (digito.match(diners_regex)) {
-                    bandeira = "diners_club";
-                    bandeiraFinal = bandeira.toUpperCase();
-                    imagemBandeira.src = "Resources/diners-icon.png";
-                    imagemBandeiraFundo.src = "Resources/diners-icon.png";
-                    LengthCvv.setAttribute('maxlength',3);
-                }
-                else if (digito.match(visa_regex)) {
-                    bandeira = "visa";
-                    bandeiraFinal = bandeira.toUpperCase();
-                    imagemBandeira.src = "Resources/visa-icon.png"
-                    imagemBandeiraFundo.src = "Resources/visa-icon.png"
-                    LengthCvv.setAttribute('maxlength',3);
-                }
-                else if (digito.match(mastercard_regex)) {
-                    bandeira = "mastercard";
-                    bandeiraFinal = bandeira.toUpperCase();
-                    imagemBandeira.src = "Resources/mastercard-icon.png";
-                    imagemBandeiraFundo.src = "Resources/mastercard-icon.png";
-                    LengthCvv.setAttribute('maxlength',3);
-                }
-                else if (digito.match(discover_regex)) {
-                    bandeira = "discover";
-                    bandeiraFinal = bandeira.toUpperCase();
-                    imagemBandeira.src = "Resources/discover-icon.png";
-                    imagemBandeiraFundo.src = "Resources/discover-icon.png";
-                    LengthCvv.setAttribute('maxlength',3);
-                }
-                else if (digito.match(maestro_regex)) {
-                    if (digito[0] == '5') {
-                        bandeira = "mastercard";
-                        bandeiraFinal = bandeira.toUpperCase();
-                        imagemBandeira.src = "Resources/mastercard-icon.png";
-                        imagemBandeiraFundo.src = "Resources/mastercard-icon.png";
-                        LengthCvv.setAttribute('maxlength',3);
-                    }
-                    else {
-                        bandeira = "maestro";
-                        bandeiraFinal = bandeira.toUpperCase();
-                        imagemBandeira.src = "Resources/maestro-icon.png";
-                        imagemBandeiraFundo.src = "Resources/maestro-icon.png";
-                        LengthCvv.setAttribute('maxlength',3);
-                    }
-                }
-
-                return parts.join(' ')
-            } else {
-                return valor
-
-            }
-
-            onload = function () {
-                document.getElementById('numero-cartao-input').oninput = function () {
-                    this.value = detectar_cartao(this.value)
-
-
-                }
-            }
-        }
-
-
-        let bandeiraFinal;
-
-
-        function finalizar_pagamento() {
-            var numeroCard = document.getElementById('numero-cartao').value;
-            var numeroCartao = numeroCard.replace(/ /g, '',);
-            var nomeTitular = document.getElementById('nome-titular').value;
-            var mesExpiracao = document.getElementById('mes-expir').value;
-            var anoExpiracao = document.getElementById('ano-expir').value;
-            var numeroCvv = document.getElementById('cvv-seguranca').value;
-            var parcelas = document.getElementById('parcela').value;
-            var bandeira = bandeiraFinal;
-
-            var inputInvalido = document.getElementsByClassName('invalid-tooltip');
-
-
-            if (numeroCartao.length <= 15) {
-                console.log("Insira um cartão válido")
-             
-                return
-            }           
-            if (nomeTitular.length < 5) {
-                console.log("Insira um nome válido")
-             
-                return
-            }
-            if (mesExpiracao == 'month') {
-                console.log("Selecione o mês de expiração")
-                return
-            }
-            if (anoExpiracao == 'year') {
-                console.log("Selecione o ano de expiração")
-                return
-            }
-            if (numeroCvv.length <= 2) {
-                console.log("Insira um número de segurança válido")
-                return
-            }
-            if (bandeira == null) {
-                console.log("Insira um cartão válido")
-                return
-            }
-
-            console.log('\n Número do cartão:' + numeroCartao + "\n Bandeira:" + bandeira + "\n Nome do Titular: " + nomeTitular + "\n Mês de expiração: " + mesExpiracao + "\n Ano de Expiração: " + anoExpiracao
-                + "\n Número de Segurança: " + numeroCvv + "\n Parcelas: " + parcelas)
-
-        }
-
-        let form = document.querySelector("form");
-        let inputs = form.querySelectorAll("input");
-        let submitButton = form.querySelector("button[type='submit']");
-        let SubmiBtnTexto = submitButton.textContent;
-
-        submitButton.addEventListener("click", function(event) {
-        event.preventDefault();
-        let isFormValid = true;
-        for (let i = 0; i < inputs.length; i++) {
-        if (inputs[i].value === "" || inputs[i].length < 3) {
-          inputs[i].classList.add("invalid");
-          isFormValid = false;      
-        }
-        if (!isFormValid == true) {
-            submitButton.textContent = SubmiBtnTexto;
-            return;
-  }
-  }
-});
-
-
-
-
-    </script>
-
-
-
+    <script async src="script.js"></script>
 </body>
 
 </html>
