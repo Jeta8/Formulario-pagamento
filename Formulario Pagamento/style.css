@@ -20,7 +20,7 @@
   justify-content: center;
   flex-flow: column;
   padding-bottom: 60px;
-  flex:1;
+  flex: 1;
   user-select: none;
 }
 
@@ -60,7 +60,6 @@
 
 .container form .flexbox .inputBox {
   flex: 1 1 150px;
-  
 }
 
 .container form .submit-btn {
@@ -75,7 +74,6 @@
   cursor: pointer;
   transition: 0.2s linear;
   position: absolute;
-  
 }
 
 .container form .submit-btn:hover {
@@ -195,7 +193,6 @@
   height: 50px;
   margin-right: 20px;
   user-select: none;
-  
 }
 
 input + span {
@@ -207,20 +204,25 @@ input + span {
   padding: 5px 10px;
   border-radius: 10px;
   user-select: none;
-text-align: center;
-  
+  text-align: center;
 }
 
+.invalid-select {
+  visibility: hidden;
+  border-color: #911;
+  color: #911;
+  transform: translate(0, 0%);
+  background-color: rgb(255, 162, 162);
+  padding: 5px 9px;
+  border-radius: 10px;
+  user-select: none;
+  text-align: center;
+}
 
 input {
   border: 1px solid black;
   position: relative;
 }
-
-
-
-
-
 
 @media (max-width: 768px) {
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
@@ -236,7 +238,7 @@ input {
     text-transform: uppercase;
     user-select: none;
   }
-  
+
   .container {
     min-height: 120vh;
     background: #eee;
@@ -245,10 +247,10 @@ input {
     justify-content: center;
     flex-flow: column;
     padding-bottom: 30px;
-    flex:1;
+    flex: 1;
     user-select: none;
   }
-  
+
   .container form {
     background: #fff;
     border-radius: 5px;
@@ -258,17 +260,17 @@ input {
     padding-top: 160px;
     height: 700px;
   }
-  
+
   .container form .inputBox {
     margin-top: 20px;
     width: 100%;
   }
-  
+
   .container form .inputBox span {
     display: block;
     padding-bottom: 5px;
   }
-  
+
   .container form .inputBox input,
   .container form .inputBox select {
     width: 100%;
@@ -277,23 +279,21 @@ input {
     border: 1px solid rgba(0, 0, 0, 0.3);
     color: #444;
   }
-  
+
   .container form .flexbox {
     display: flex;
     gap: 15px;
   }
-  
+
   .container form .flexbox .inputBox {
     flex: 1 1 150px;
-    
   }
-  .container form .flexbox .cvv-input, .parcelamento-input {
+  .container form .flexbox .cvv-input,
+  .parcelamento-input {
     display: flex;
     margin-top: 25px;
   }
 
-  
-  
   .container form .submit-btn {
     width: 100%;
     max-width: 360px;
@@ -306,14 +306,13 @@ input {
     cursor: pointer;
     transition: 0.2s linear;
     position: absolute;
-    
   }
-  
+
   .container form .submit-btn:hover {
     letter-spacing: 2px;
     opacity: 0.8;
   }
-  
+
   .container .card-container {
     margin-bottom: -150px;
     position: relative;
@@ -322,7 +321,7 @@ input {
     margin-left: 0px;
     user-select: none;
   }
-  
+
   .container .card-container .front {
     position: absolute;
     height: 100%;
@@ -350,18 +349,18 @@ input {
     margin: 10px 0;
     height: 40px;
   }
-  
+
   .container .card-container .back .box {
     padding: 0 20px;
     user-select: none;
   }
-  
+
   .container .card-container .back .box span {
     color: #fff;
     font-size: 12px;
     user-select: none;
   }
-  
+
   .container .card-container .back .box .cvv-box {
     height: 30px;
     padding: 4px;
@@ -372,13 +371,12 @@ input {
     width: 100%;
     user-select: none;
   }
-  
+
   .container .card-container .back .icone-bandeira-fundo {
     margin-top: 10px;
     height: 40px;
     margin-right: 20px;
     user-select: none;
-    
   }
 }
 
@@ -395,9 +393,8 @@ input {
     text-decoration: none;
     text-transform: uppercase;
     user-select: none;
-    
   }
-  
+
   .container {
     min-height: 600px;
     background: #eee;
@@ -406,10 +403,10 @@ input {
     justify-content: center;
     flex-flow: column;
     padding-bottom: 30px;
-    flex:1;
+    flex: 1;
     user-select: none;
   }
-  
+
   .container form {
     background: #fff;
     border-radius: 5px;
@@ -419,17 +416,17 @@ input {
     padding-top: 160px;
     height: 600px;
   }
-  
+
   .container form .inputBox {
     margin-top: 20px;
     width: 100%;
   }
-  
+
   .container form .inputBox span {
     display: block;
     padding-bottom: 5px;
   }
-  
+
   .container form .inputBox input,
   .container form .inputBox select {
     width: 100%;
@@ -438,23 +435,21 @@ input {
     border: 1px solid rgba(0, 0, 0, 0.3);
     color: #444;
   }
-  
+
   .container form .flexbox {
     display: flex;
     gap: 15px;
   }
-  
+
   .container form .flexbox .inputBox {
     flex: 1 1 100px;
-    
   }
-  .container form .flexbox .cvv-input, .parcelamento-input {
+  .container form .flexbox .cvv-input,
+  .parcelamento-input {
     display: flex;
     margin-top: 25px;
   }
 
-  
-  
   .container form .submit-btn {
     width: 100%;
     max-width: 360px;
@@ -467,14 +462,13 @@ input {
     cursor: pointer;
     transition: 0.2s linear;
     position: absolute;
-    
   }
-  
+
   .container form .submit-btn:hover {
     letter-spacing: 2px;
     opacity: 0.8;
   }
-  
+
   .container .card-container {
     margin-bottom: -150px;
     position: relative;
@@ -483,7 +477,7 @@ input {
     margin-left: 0px;
     user-select: none;
   }
-  
+
   .container .card-container .front {
     position: absolute;
     height: 100%;
@@ -511,18 +505,18 @@ input {
     margin: 10px 0;
     height: 40px;
   }
-  
+
   .container .card-container .back .box {
     padding: 0 20px;
     user-select: none;
   }
-  
+
   .container .card-container .back .box span {
     color: #fff;
     font-size: 12px;
     user-select: none;
   }
-  
+
   .container .card-container .back .box .cvv-box {
     height: 30px;
     padding: 4px;
@@ -533,12 +527,11 @@ input {
     width: 100%;
     user-select: none;
   }
-  
+
   .container .card-container .back .icone-bandeira-fundo {
     margin-top: 10px;
     height: 40px;
     margin-right: 20px;
     user-select: none;
-    
   }
 }

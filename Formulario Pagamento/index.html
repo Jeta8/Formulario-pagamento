@@ -20,7 +20,7 @@
                     <img src="Resources/chip.png" alt="">
                     <img src="" alt="" id="icone-bandeira" class="icone-bandeira-frente">
                 </div>
-                <div class="card-number-box">1234 1234 1234 1234</div>
+                <div class="card-number-box">0000 0000 0000 0000</div>
                 <div class="flexbox">
                     <div class="box">
                         <span>Nome do Titular</span>
@@ -60,8 +60,8 @@
 
             <div class="inputBox">
                 <span>Nome do Titular</span>
-                <input type="text" id="nome-titular" minlength="7"  title="Nome do Titular" class="nome-titular-input" inputmode="full-width-latin" required>
-                <span class="invalid">Insira um nome valido</span>
+                <input type="text" id="nome-titular" minlength="7"  title="Nome do Titular" pattern="[A-Za-z]" onkeyup="filtro_Nome(event)" class="nome-titular-input" inputmode="full-width-latin" required>
+                <span class="invalid">Insira um nome válido</span>
             </div>
 
             <div class="flexbox">
@@ -80,8 +80,9 @@
                         <option value="09">09</option>
                         <option value="10">10</option>
                         <option value="11">11</option>
-                        <option value="12">12</option>
+                        <option value="12">12</option>                 
                     </select>
+                    <span class="invalid-select">Selecione um mês</span>
                     
                 </div>
 
@@ -98,8 +99,9 @@
                         <option value="29">2029</option>
                         <option value="30">2030</option>
                         <option value="31">2031</option>
-                        <option value="32">2032</option>
+                        <option value="32">2032</option>       
                     </select>
+                    <span class="invalid-select">Selecione um ano</span>
                     
                 </div>
                 <div class="inputBox">
